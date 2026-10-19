@@ -53,23 +53,43 @@
   
 
 
-  
-  <!-- Spindle and custom TCP: 
-  <link name="spindle">
+   <!-- Custom spindle and TCP -->
+  <!-- Provisional dimensions in metres; update after physical measurements -->
+  <xacro:property name="spindle_radius" value="0.04"/>
+  <xacro:property name="spindle_length" value="0.18"/>
 
+  <link name="spindle">
+    <visual>
+      <origin xyz="0 0 ${spindle_length / 2.0}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${spindle_radius}" length="${spindle_length}"/>
+      </geometry>
+      <material name="spindle_dark">
+        <color rgba="0.15 0.15 0.18 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 ${spindle_length / 2.0}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${spindle_radius}" length="${spindle_length}"/>
+      </geometry>
+    </collision>
   </link>
 
+  <link name="tcp"/>
 
   <joint name="tool0_to_spindle" type="fixed">
-
+    <parent link="$(arg tf_prefix)tool0"/>
+    <child link="spindle"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-
 
   <joint name="spindle_to_tcp" type="fixed">
-
+    <parent link="spindle"/>
+    <child link="tcp"/>
+    <origin xyz="0 0 ${spindle_length}" rpy="0 0 0"/>
   </joint>
-
--->
 
 
 <!-- TO BE DONE TODAY  The end -->
