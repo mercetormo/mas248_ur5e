@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<robot name="mas248_ur5e" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Main arguments -->
+  <xacro:arg name="ur_type" default="ur5e"/>
+  <xacro:arg name="tf_prefix" default=""/>
+  <xacro:arg name="robot_ip" default="0.0.0.0"/>
+  <xacro:arg name="safety_limits" default="true"/>
+  <xacro:arg name="name" default="ur"/>
+  <xacro:arg name="use_fake_hardware" default="true"/>
+
+  <!-- Vendor robot model (keep original package untouched) -->
+  <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/> <!-- Here we define the original UR5e model from a driver -->
+
+
+  <!-- TO BE DONE TODAY beginning -->
+
+  <!-- Global reference frame -->
+  <link name="world"/>
+
+  <!-- Pedestal -->
+  <link name="pedestal_link">
+
+    <visual>
+      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+
+      <geometry>
+	<cylinder radius="0.15" length="0.8"/>
+      </geometry>
+
+      <material name="pedestal_grey">
+	<color rgba="0.5 0.5 0.5 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+
+      <geometry>
+	<cylinder radius="0.15" length="0.8"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <!-- Fixed joint: world to pedestal -->
+  <joint name="world_to_pedestal" type="fixed">
+    <parent link="world"/>
+    <child link="pedestal_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+
+
+  
+  <!-- Spindle and custom TCP: 
+  <link name="spindle">
+
+  </link>
+
+
+  <joint name="tool0_to_spindle" type="fixed">
+
+  </joint>
+
+
+  <joint name="spindle_to_tcp" type="fixed">
+
+  </joint>
+
+-->
+
+
+<!-- TO BE DONE TODAY  The end -->
+
+  <!-- Instantiate UR robot -->
+  <xacro:ur_robot
+    name="$(arg name)"
+    ur_type="$(arg ur_type)"
+    tf_prefix="$(arg tf_prefix)"
+    parent="pedestal_link"
+    joint_limits_parameters_file="$(find ur_description)/config/$(arg ur_type)/joint_limits.yaml"
+    kinematics_parameters_file="$(find ur_description)/config/$(arg ur_type)/default_kinematics.yaml"
+    physical_parameters_file="$(find ur_description)/config/$(arg ur_type)/physical_parameters.yaml"
+    visual_parameters_file="$(find ur_description)/config/$(arg ur_type)/visual_parameters.yaml"
+    safety_limits="$(arg safety_limits)"
+    safety_pos_margin="0.15"
+    safety_k_position="20"
+    generate_ros2_control_tag="false"
+    use_fake_hardware="$(arg use_fake_hardware)"
+    headless_mode="true"
+    robot_ip="$(arg robot_ip)"
+    script_filename=""
+    input_recipe_filename=""
+    output_recipe_filename=""
+  >
+    <origin xyz="0 0 0.8" rpy="0 0 0"/>
+  </xacro:ur_robot>
+
+  <!-- Simple work table FOR FUN and LEARNING-->
+  <link name="table_link">
+    <visual>
+      <origin xyz="0.85 0 0.40" rpy="0 0 0"/>
+      <geometry><box size="1.20 0.80 0.05"/></geometry>
+      <material name="table"><color rgba="0.75 0.75 0.78 1.0"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0.85 0 0.40" rpy="0 0 0"/>
+      <geometry><box size="1.20 0.80 0.05"/></geometry>
+    </collision>
+  </link>
+  <joint name="world_to_table" type="fixed">
+    <parent link="world"/>
+    <child link="table_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>
