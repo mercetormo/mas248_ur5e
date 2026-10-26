@@ -15,7 +15,7 @@ changed. These values are for mock simulation, not real workcell calibration.
 Example:
 
 ```bash
-ros2 run mas248_ur5e_demos image_to_targets pumpkin_outline.png \
+ros2 run mas248_ur5e_demos image_to_targets pumpkin_outline.jpg \
   --width-m 0.18 --center-x 0.55 --center-y 0 --center-z 0.46 \
   --max-contours 4 --max-points 40 --open-stages --rviz
 ```

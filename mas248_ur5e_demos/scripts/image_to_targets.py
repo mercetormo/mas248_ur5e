@@ -18,7 +18,7 @@ import cv2
 import numpy as np
 
 VERSION = '0.4.0'
-DEFAULT_IMAGE = 'pumpkin_outline.png'
+DEFAULT_IMAGE = 'pumpkin_outline.jpg'
 STAGE_NAMES = (
     ('01_original.png', 'Original image'),
     ('02_grayscale.png', 'Grayscale'),
@@ -194,7 +194,7 @@ def convert_image(image_file=None, *, output='/tmp/mas248_targets.json',
 def get_parser():
     p=argparse.ArgumentParser(description='MAS248 student: image size + image centre -> TCP poses (no paper)')
     p.add_argument('--version',action='version',version='MAS248 student image_to_targets 0.4.0')
-    p.add_argument('image',nargs='?',default=None,help='Full path or filename in images/ (default pumpkin_outline.png)')
+    p.add_argument('image',nargs='?',default=None,help='Full path or filename in images/ (default pumpkin_outline.jpg)')
     p.add_argument('--width-m',type=float,default=0.18,help='Physical FULL image width in metres (default 0.18)')
     p.add_argument('--center-x',type=float,default=0.55,help='WORLD X of image centre in metres')
     p.add_argument('--center-y',type=float,default=0.,help='WORLD Y of image centre in metres')
