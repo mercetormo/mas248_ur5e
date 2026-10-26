@@ -1,20 +1,19 @@
-# ROS2 / colcon
+build/
+install/
+log/
+__pycache__/
+*.pyc
+.vscode/
+
+# Python generated files
+__pycache__/
+*.pyc
+*.pyo
+
+# ROS 2 generated files
 build/
 install/
 log/
 
-# Python
-__pycache__/
-*.pyc
-
 # Editor files
 .vscode/
-.idea/
-*~
-
-# Temporary files
-*.swp
-*.tmp
-
-# Generated URDF files
-*.urdf
