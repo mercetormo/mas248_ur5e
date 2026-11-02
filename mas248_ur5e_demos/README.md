@@ -128,3 +128,34 @@ python3 scripts/run_picture.py \
 Offline checks cover image mapping, TCP orientations, target validation,
 planning-state chaining, partial-path rejection and the mock execution guard.
 Reachability and simulated execution are checked separately with MoveIt.
+
+
+
+
+## Lecture 10 – Circle Drawing with UR5e
+
+### Image to TCP targets
+
+Convert the circle image into TCP coordinates:
+
+```bash
+python3 -m scripts.image_to_targets circle.png \
+  --width-m 0.18 \
+  --center-x 0.55 \
+  --center-y 0.0 \
+  --center-z 0.0 \
+  --max-contours 1
+
+
+###Plan trajectory
+
+```bash
+python3 -m scripts.run_picture \
+  --targets /tmp/mas248_targets.json
+
+###Execute simulation
+
+```bash
+python3 -m scripts.run_picture \
+  --targets /tmp/mas248_targets.json \
+  --execute
