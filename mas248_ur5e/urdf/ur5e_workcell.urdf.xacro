@@ -22,10 +22,10 @@
   <link name="pedestal_link">
 
     <visual>
-      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+      <origin xyz="0 0 0.165" rpy="0 0 0"/>
 
       <geometry>
-	<cylinder radius="0.15" length="0.8"/>
+	<cylinder radius="0.03" length="0.278"/>
       </geometry>
 
       <material name="pedestal_grey">
@@ -34,10 +34,10 @@
     </visual>
 
     <collision>
-      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+      <origin xyz="0 0 0.165" rpy="0 0 0"/>
 
       <geometry>
-	<cylinder radius="0.15" length="0.8"/>
+	<cylinder radius="0.03" length="0.278"/>
       </geometry>
     </collision>
 
@@ -53,26 +53,44 @@
   
 
 
-   <!-- Custom spindle and TCP -->
-  <!-- Provisional dimensions in metres; update after physical measurements -->
-  <xacro:property name="spindle_radius" value="0.04"/>
-  <xacro:property name="spindle_length" value="0.18"/>
+   <!-- Measured offsets; simplified holder and pen geometry -->
+  <!-- Assumed mounting: pen points along tool0 -Y -->
+  <xacro:property name="pen_radius" value="0.00805"/>
+  <xacro:property name="pen_axial_offset" value="0.06365"/>
+  <xacro:property name="pen_tip_offset" value="0.093"/>
 
   <link name="spindle">
     <visual>
-      <origin xyz="0 0 ${spindle_length / 2.0}" rpy="0 0 0"/>
+      <origin xyz="0 0 ${pen_axial_offset / 2}"/>
       <geometry>
-        <cylinder radius="${spindle_radius}" length="${spindle_length}"/>
+        <box size="0.04 0.04 ${pen_axial_offset}"/>
       </geometry>
-      <material name="spindle_dark">
-        <color rgba="0.15 0.15 0.18 1.0"/>
+      <material name="holder_dark">
+        <color rgba="0.15 0.15 0.18 1"/>
       </material>
     </visual>
-
     <collision>
-      <origin xyz="0 0 ${spindle_length / 2.0}" rpy="0 0 0"/>
+      <origin xyz="0 0 ${pen_axial_offset / 2}"/>
       <geometry>
-        <cylinder radius="${spindle_radius}" length="${spindle_length}"/>
+        <box size="0.04 0.04 ${pen_axial_offset}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 ${-pen_tip_offset / 2} ${pen_axial_offset}"
+              rpy="${pi / 2} 0 0"/>
+      <geometry>
+        <cylinder radius="${pen_radius}" length="${pen_tip_offset}"/>
+      </geometry>
+      <material name="pen_green">
+        <color rgba="0.1 0.65 0.2 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 ${-pen_tip_offset / 2} ${pen_axial_offset}"
+              rpy="${pi / 2} 0 0"/>
+      <geometry>
+        <cylinder radius="${pen_radius}" length="${pen_tip_offset}"/>
       </geometry>
     </collision>
   </link>
@@ -88,9 +106,9 @@
   <joint name="spindle_to_tcp" type="fixed">
     <parent link="spindle"/>
     <child link="tcp"/>
-    <origin xyz="0 0 ${spindle_length}" rpy="0 0 0"/>
+    <origin xyz="0 ${-pen_tip_offset} ${pen_axial_offset}"
+            rpy="${pi / 2} 0 0"/>
   </joint>
-
 
 <!-- TO BE DONE TODAY  The end -->
 
@@ -115,18 +133,18 @@
     input_recipe_filename=""
     output_recipe_filename=""
   >
-    <origin xyz="0 0 0.8" rpy="0 0 0"/>
+    <origin xyz="0 0 0.304" rpy="0 0 0"/>
   </xacro:ur_robot>
 
   <!-- Simple work table FOR FUN and LEARNING-->
   <link name="table_link">
     <visual>
-      <origin xyz="0.85 0 0.40" rpy="0 0 0"/>
+      <origin xyz="0.85 0 -0.025" rpy="0 0 0"/>
       <geometry><box size="1.20 0.80 0.05"/></geometry>
       <material name="table"><color rgba="0.75 0.75 0.78 1.0"/></material>
     </visual>
     <collision>
-      <origin xyz="0.85 0 0.40" rpy="0 0 0"/>
+      <origin xyz="0.85 0 -0.025" rpy="0 0 0"/>
       <geometry><box size="1.20 0.80 0.05"/></geometry>
     </collision>
   </link>

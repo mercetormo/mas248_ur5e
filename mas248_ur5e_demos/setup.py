@@ -27,6 +27,7 @@ setup(
         'image_to_targets = scripts.image_to_targets:main',
         'show_targets_rviz = scripts.show_targets_rviz:main',
         'move_two_targets = scripts.move_two_targets:main',
+        'run_picture = scripts.run_picture:main',
         'check_stack = scripts.check_stack:main',
     ]},
 )
