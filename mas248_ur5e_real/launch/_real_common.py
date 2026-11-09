@@ -88,14 +88,14 @@ def validate_rendered(xml):
  root=ET.fromstring(xml)
  if root.get('name')!='mas248_ur5e':raise RuntimeError('Unexpected robot name in rendered URDF')
  links={e.get('name') for e in root.findall('link')}
- required={'world','pedestal_link','base_link','spindle_body','tcp'}
+ required={'world','pedestal_link','base_link','spindle','table_link','tcp'}
  if not required.issubset(links):raise RuntimeError('Missing workcell links: '+repr(sorted(required-links)))
  joints={e.get('name') for e in root.findall('joint')}
  if not set(JOINTS).issubset(joints):raise RuntimeError('Missing joints: '+repr(sorted(set(JOINTS)-joints)))
  controls=root.findall('ros2_control')
  if len(controls)!=1:raise RuntimeError('Expected precisely 1 real ros2_control, found '+str(len(controls)))
  plugins=[(p.text or '').strip() for p in controls[0].findall('.//hardware/plugin')]
- if len(plugins)!=1 or 'ur_robot_driver/' not in plugins[0] or 'mock' in plugins[0].lower():
+ if plugins != ['ur_robot_driver/URPositionHardwareInterface']:
   raise RuntimeError('Vendor real hardware expected; got '+repr(plugins))
  return True
 
