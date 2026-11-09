@@ -8,6 +8,11 @@ set(DERIVED_CONFIG "${CMAKE_CURRENT_BINARY_DIR}/config/ur5e")
 if(NOT EXISTS "${CANONICAL_XACRO}")
   message(FATAL_ERROR "Expected MAS248 Lecture 8 workcell: ${CANONICAL_XACRO}")
 endif()
+# Reconfigure when the canonical workcell or the generator's inputs change.
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+  "${CANONICAL_XACRO}"
+  "${CMAKE_CURRENT_SOURCE_DIR}/scripts/prepare_description.py"
+  "${CMAKE_CURRENT_SOURCE_DIR}/config/real_robot_defaults.yaml")
 # This generator writes ONLY into build/, never to any Lecture 8/9 source.
 execute_process(
   COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/scripts/prepare_description.py"
@@ -20,10 +25,11 @@ if(NOT GENERATION_CODE EQUAL 0)
 endif()
 message(STATUS "${GENERATION_OUT}")
 # Source configuration is visible inside the ZIP; generated configs are vendor files.
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/config/" DESTINATION share/${PROJECT_NAME}/config)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/config/" DESTINATION share/${PROJECT_NAME}/config
+        PATTERN "ur5e_update_rate.yaml" EXCLUDE)
 install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/config/" DESTINATION share/${PROJECT_NAME}/config)
 install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/urdf" "${CMAKE_CURRENT_SOURCE_DIR}/launch"
-        DESTINATION share/${PROJECT_NAME})
+        DESTINATION share/${PROJECT_NAME} PATTERN "__pycache__" EXCLUDE)
 install(PROGRAMS scripts/validate_description.py scripts/validate_stack.py
         scripts/run_picture_real.py scripts/preflight.py
         DESTINATION lib/${PROJECT_NAME})

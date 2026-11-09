@@ -6,11 +6,13 @@
   <maintainer email="mas248@uia.no">MAS248 Robotics</maintainer>
   <license>BSD-3-Clause</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <exec_depend>mas248_ur5e</exec_depend>
+  <depend>mas248_ur5e</depend>
+  <depend>ament_index_python</depend>
+  <build_depend>python3-yaml</build_depend>
   <exec_depend>mas248_ur5e_moveit_config</exec_depend>
   <exec_depend>mas248_ur5e_demos</exec_depend>
-  <exec_depend>ur_robot_driver</exec_depend>
-  <exec_depend>ur_description</exec_depend>
+  <depend>ur_robot_driver</depend>
+  <depend>ur_description</depend>
   <exec_depend>ur_client_library</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>moveit_ros_move_group</exec_depend>
@@ -26,5 +28,6 @@
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>moveit_msgs</exec_depend>
   <exec_depend>rclpy</exec_depend>
+  <exec_depend>rcl_interfaces</exec_depend>
   <export><build_type>ament_cmake</build_type></export>
 </package>
