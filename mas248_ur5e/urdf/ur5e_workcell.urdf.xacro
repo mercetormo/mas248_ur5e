@@ -22,10 +22,10 @@
   <link name="pedestal_link">
 
     <visual>
-      <origin xyz="0 0 0.165" rpy="0 0 0"/>
+      <origin xyz="0 0 0.1515" rpy="0 0 0"/>
 
       <geometry>
-	<cylinder radius="0.03" length="0.278"/>
+	<cylinder radius="0.1025" length="0.303"/>
       </geometry>
 
       <material name="pedestal_grey">
@@ -34,10 +34,10 @@
     </visual>
 
     <collision>
-      <origin xyz="0 0 0.165" rpy="0 0 0"/>
+      <origin xyz="0 0 0.1515" rpy="0 0 0"/>
 
       <geometry>
-	<cylinder radius="0.03" length="0.278"/>
+	<cylinder radius="0.1025" length="0.303"/>
       </geometry>
     </collision>
 
@@ -55,43 +55,41 @@
 
    <!-- Measured offsets; simplified holder and pen geometry -->
   <!-- Assumed mounting: pen points along tool0 -Y -->
-  <xacro:property name="pen_radius" value="0.00805"/>
-  <xacro:property name="pen_axial_offset" value="0.06365"/>
-  <xacro:property name="pen_tip_offset" value="0.093"/>
+  <xacro:property name="pen_radius" value="0.00765"/>
+  <xacro:property name="pen_axial_offset" value="0.052"/>
+  <xacro:property name="pen_tip_offset" value="0.089"/>
+  <xacro:property name="pen_exposed_length" value="0.058"/>
 
   <link name="spindle">
     <visual>
-      <origin xyz="0 0 ${pen_axial_offset / 2}"/>
-      <geometry>
-        <box size="0.04 0.04 ${pen_axial_offset}"/>
-      </geometry>
-      <material name="holder_dark">
-        <color rgba="0.15 0.15 0.18 1"/>
-      </material>
+      <origin xyz="0 0 0.0155"/>
+      <geometry><box size="0.080 0.106 0.031"/></geometry>
+      <material name="holder_dark"><color rgba="0.15 0.15 0.18 1"/></material>
     </visual>
-    <collision>
-      <origin xyz="0 0 ${pen_axial_offset / 2}"/>
-      <geometry>
-        <box size="0.04 0.04 ${pen_axial_offset}"/>
-      </geometry>
-    </collision>
-
     <visual>
-      <origin xyz="0 ${-pen_tip_offset / 2} ${pen_axial_offset}"
-              rpy="${pi / 2} 0 0"/>
-      <geometry>
-        <cylinder radius="${pen_radius}" length="${pen_tip_offset}"/>
-      </geometry>
-      <material name="pen_green">
-        <color rgba="0.1 0.65 0.2 1"/>
-      </material>
+      <origin xyz="0 0.008 0.0525"/>
+      <geometry><box size="0.043 0.078 0.043"/></geometry>
+      <material name="holder_dark"/>
     </visual>
-    <collision>
-      <origin xyz="0 ${-pen_tip_offset / 2} ${pen_axial_offset}"
+    <visual>
+      <origin xyz="0 ${-pen_tip_offset + pen_exposed_length / 2} ${pen_axial_offset}"
               rpy="${pi / 2} 0 0"/>
-      <geometry>
-        <cylinder radius="${pen_radius}" length="${pen_tip_offset}"/>
-      </geometry>
+      <geometry><cylinder radius="${pen_radius}" length="${pen_exposed_length}"/></geometry>
+      <material name="pen_green"><color rgba="0.1 0.65 0.2 1"/></material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.0155"/>
+      <geometry><box size="0.080 0.106 0.031"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0.008 0.0525"/>
+      <geometry><box size="0.043 0.078 0.043"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 ${-pen_tip_offset + pen_exposed_length / 2} ${pen_axial_offset}"
+              rpy="${pi / 2} 0 0"/>
+      <geometry><cylinder radius="${pen_radius}" length="${pen_exposed_length}"/></geometry>
     </collision>
   </link>
 
@@ -133,7 +131,7 @@
     input_recipe_filename=""
     output_recipe_filename=""
   >
-    <origin xyz="0 0 0.304" rpy="0 0 0"/>
+    <origin xyz="0 0 0.303" rpy="0 0 0"/>
   </xacro:ur_robot>
 
   <!-- Simple work table FOR FUN and LEARNING-->
